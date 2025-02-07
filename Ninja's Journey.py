@@ -1,5 +1,6 @@
 import pygame
 import random
+import pickle
 
 from pygame.locals import (
     K_ESCAPE,
@@ -43,11 +44,57 @@ def draw_start_menu():
     pygame.display.update()
 
 
-def draw_help_menu():
+def draw_help_screen():
     screen.fill((0, 0, 0))
     font = pygame.font.SysFont('arial', 40)
     title = font.render("Инструкция к управлению", True, "white")
-    screen.blit(title, (SCREEN_WIDTH - title.get_width() // 2, 50))
+    screen.blit(title, ((SCREEN_WIDTH - title.get_width()) // 2, 50))
+    pygame.draw.rect(screen, (120, 120, 120), (50, 200, 60, 60), border_radius=10)
+    A = font.render("A", True, "white")
+    screen.blit(A, (68, 205))
+    A_instructions = font.render(" - Идти влево", True, "white")
+    screen.blit(A_instructions, (110, 205))
+    pygame.draw.rect(screen, (120, 120, 120), (50, 350, 60, 60), border_radius=10)
+    D = font.render("D", True, "white")
+    screen.blit(D, (68, 355))
+    D_instructions = font.render(" - Идти направо", True, "white")
+    screen.blit(D_instructions, (110, 355))
+    pygame.draw.rect(screen, (120, 120, 120), (50, 500, 120, 60), border_radius=10)
+    Space = font.render("Space", True, "white")
+    screen.blit(Space, (68, 505))
+    Space_instructions = font.render(" - Прыжок / Отскок от стенки", True, "white")
+    screen.blit(Space_instructions, (170, 505))
+    pygame.draw.rect(screen, (120, 120, 120), (400, 200, 60, 60), border_radius=10)
+    Esc = font.render("Esc", True, "white")
+    screen.blit(Esc, (402, 205))
+    Esc_instructions = font.render(" - Пауза / Вернуться", True, "white")
+    screen.blit(Esc_instructions, (470, 205))
+    pygame.display.update()
+
+
+def draw_pause_screen():
+    global again, leave
+    screen.fill((0, 0, 0))
+    font = pygame.font.SysFont('arial', 40)
+    title = font.render('Пауза', True, (255, 255, 255))
+    restart = font.render('Заново', True, (255, 255, 255))
+    restart_button = Button()
+    restart_button.rect = restart_button.surf.get_rect().move(230, 400)
+    if restart_button.rect.collidepoint(pygame.mouse.get_pos()):
+        again = 1
+    else:
+        again = 0
+    quit_text = font.render('Меню', True, (255, 255, 255))
+    quit_button = Button()
+    quit_button.rect = quit_button.surf.get_rect().move(475, 400)
+    if quit_button.rect.collidepoint(pygame.mouse.get_pos()):
+        leave = 1
+    else:
+        leave = 0
+    screen.blit(title, (SCREEN_WIDTH / 2 - title.get_width() / 2, 200))
+    screen.blit(restart, (220, 400))
+    screen.blit(quit_text, (475, 400))
+    pygame.display.update()
 
 
 def draw_level_selection():
@@ -88,7 +135,7 @@ def draw_level_selection():
 
 
 def draw_game_over_screen():
-    global next, again, leave, map_drawn, lvl_2_unlocked, lvl_3_unlocked, lvl_4_unlocked, lvl_5_unlocked, lvl_6_unlocked, lvl_7_unlocked, lvl_8_unlocked
+    global next, again, leave, map_drawn
     for platform in platforms:
         platform.kill()
     for door in doors:
@@ -99,19 +146,19 @@ def draw_game_over_screen():
     screen.fill((0, 0, 0))
     font = pygame.font.SysFont('arial', 40)
     if last_level == "level 1":
-        lvl_2_unlocked = 1
+        data["lvl_2_unlocked"] = 1
     elif last_level == "level 2":
-        lvl_3_unlocked = 1
+        data["lvl_3_unlocked"] = 1
     elif last_level == "level 3":
-        lvl_4_unlocked = 1
+        data["lvl_4_unlocked"] = 1
     elif last_level == "level 4":
-        lvl_5_unlocked = 1
+        data["lvl_5_unlocked"] = 1
     elif last_level == "level 5":
-        lvl_6_unlocked = 1
+        data["lvl_6_unlocked"] = 1
     elif last_level == "level 6":
-        lvl_7_unlocked = 1
+        data["lvl_7_unlocked"] = 1
     elif last_level == "level 7":
-        lvl_8_unlocked = 1
+        data["lvl_8_unlocked"] = 1
     if last_level != "level 8":
         title = font.render('Уровень пройден!', True, (255, 255, 255))
         next_level = font.render('Следующий уровень', True, (255, 255, 255))
@@ -425,13 +472,9 @@ fps = 60
 map_drawn = 0
 last_level = ""
 blocked = 0
-lvl_2_unlocked = 0
-lvl_3_unlocked = 0
-lvl_4_unlocked = 0
-lvl_5_unlocked = 0
-lvl_6_unlocked = 0
-lvl_7_unlocked = 0
-lvl_8_unlocked = 0
+
+with open("data/Save_file.txt", "rb") as f:
+    data = pickle.load(f)
 
 jump_sound = pygame.mixer.Sound("data/jump.wav")
 jump_sound2 = pygame.mixer.Sound("data/jump_hp.wav")
@@ -442,6 +485,7 @@ flip_sound3 = pygame.mixer.Sound("data/flip_lp.wav")
 
 running = True
 ready_to_start = 0
+asking_for_help = 0
 choosing_level_1 = 0
 choosing_level_2 = 0
 choosing_level_3 = 0
@@ -459,6 +503,12 @@ while running:
             if event.key == K_ESCAPE:
                 if game_state == "help_screen" or game_state == "select_level":
                     game_state = "start_menu"
+                elif game_state == (
+                        "level 1" or "level 2" or "level 3" or "level 4" or "level 5" or "level 6" or "level 7" or "level 8"):
+                    last_level = game_state
+                    game_state = "pause_menu"
+                elif game_state == "pause_menu":
+                    game_state = last_level
             if event.key == pygame.key.key_code("space"):
                 if player.rect.bottom == SCREEN_HEIGHT or standing == 1 or touching_right == 1 or touching_left == 1:
                     if can_jump_right == 1:
@@ -476,64 +526,68 @@ while running:
                 last_level = game_state
                 game_state = "game_over"
         if event.type == pygame.MOUSEBUTTONDOWN:
+            print(game_state)
             if ready_to_start == 1:
                 game_state = "select_level"
                 ready_to_start = 0
+            elif asking_for_help == 1:
+                game_state = "help_screen"
+                asking_for_help = 0
             elif choosing_level_1 == 1:
                 game_state = "level 1"
                 choosing_level_1 = 0
                 blocked = 0
             elif choosing_level_2 == 1:
-                if lvl_2_unlocked == 1:
+                if data["lvl_2_unlocked"] == 1:
                     game_state = "level 2"
                     choosing_level_2 = 0
                     blocked = 0
                 else:
                     blocked = 1
             elif choosing_level_3 == 1:
-                if lvl_2_unlocked == 1:
+                if data["lvl_2_unlocked"] == 1:
                     game_state = "level 2"
                     choosing_level_2 = 0
                     blocked = 0
                 else:
                     blocked = 1
             elif choosing_level_3 == 1:
-                if lvl_3_unlocked == 1:
+                if data["lvl_3_unlocked"] == 1:
                     game_state = "level 3"
                     choosing_level_3 = 0
                     blocked = 0
                 else:
                     blocked = 1
             elif choosing_level_4 == 1:
-                if lvl_4_unlocked == 1:
+                if data["lvl_4_unlocked"] == 1:
                     game_state = "level 4"
                     choosing_level_4 = 0
                     blocked = 0
                 else:
                     blocked = 1
             elif choosing_level_5 == 1:
-                if lvl_5_unlocked == 1:
+                if data["lvl_5_unlocked"] == 1:
                     game_state = "level 5"
                     choosing_level_5 = 0
                     blocked = 0
                 else:
                     blocked = 1
             elif choosing_level_6 == 1:
-                if lvl_6_unlocked == 1:
+                if data["lvl_6_unlocked"] == 1:
                     game_state = "level 6"
                     choosing_level_6 = 0
                     blocked = 0
                 else:
                     blocked = 1
             elif choosing_level_7 == 1:
-                if lvl_7_unlocked == 1:
+                if data["lvl_7_unlocked"] == 1:
                     game_state = "level 7"
                     choosing_level_7 = 0
                     blocked = 0
                 else:
                     blocked = 1
             elif choosing_level_8 == 1:
-                if lvl_8_unlocked == 1:
+                if data["lvl_8_unlocked"] == 1:
                     game_state = "level 8"
                     choosing_level_8 = 0
                     blocked = 0
@@ -563,23 +617,40 @@ while running:
                     next = 0
             elif again == 1:
                 print(last_level)
+                player.rect = player.surf.get_rect().move(30, 500)
                 game_state = last_level
                 again = 0
             elif leave == 1:
                 game_state = "start_menu"
                 leave = 0
+            else:
+                print(pygame.mouse.get_pos())
 
     if game_state == "start_menu":
         draw_start_menu()
         start_button = Button()
-        start_button.rect = start_button.surf.get_rect().move(100, 330)
+        start_button.surf = pygame.transform.scale(start_button.surf, (155, 65))
+        start_button.rect = start_button.surf.get_rect().move(70, 325)
         if start_button.rect.collidepoint(pygame.mouse.get_pos()):
             ready_to_start = 1
         else:
             ready_to_start = 0
+        help_button = Button()
+        help_button.surf = pygame.transform.scale(help_button.surf, (110, 60))
+        help_button.rect = help_button.surf.get_rect().move(255, 325)
+        if help_button.rect.collidepoint(pygame.mouse.get_pos()):
+            asking_for_help = 1
+        else:
+            asking_for_help = 0
+
+    elif game_state == "help_screen":
+        draw_help_screen()
 
     elif game_state == "game_over":
         draw_game_over_screen()
+
+    elif game_state == "pause_menu":
+        draw_pause_screen()
 
     elif game_state == "select_level":
         draw_level_selection()
@@ -958,3 +1029,5 @@ while running:
         if jumping_rn > 0:
             jumping_rn -= 2
         clock.tick(fps)
+with open("data/Save_file.txt", "wb") as f:
+    pickle.dump(data, f)
