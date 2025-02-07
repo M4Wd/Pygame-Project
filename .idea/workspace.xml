@@ -5,26 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="5cdef905-fddf-40b3-ad15-ffd04f684f72" name="Changes" comment="test commit">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GettyImages-1308797233.webp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/KT.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/KT.spec" beforeDir="false" />
+      <changelist_data name="M4Wd" email="mo4alinwladimir@yandex.ru" />
       <change beforePath="$PROJECT_DIR$/Ninja's Journey.py" beforeDir="false" afterPath="$PROJECT_DIR$/Ninja's Journey.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/KT/Analysis-00.toc" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/KT/EXE-00.toc" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/KT/KT.pkg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/KT/PKG-00.toc" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/KT/PYZ-00.pyz" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/KT/PYZ-00.toc" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/KT/base_library.zip" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/KT/warn-KT.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/KT/xref-KT.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cloud.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/KT.exe" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/Результаты.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/jet.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/missile.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Результаты.txt" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -92,7 +74,15 @@
       <option name="project" value="LOCAL" />
       <updated>1738931479986</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="test commit">
+      <option name="closed" value="true" />
+      <created>1738936114364</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1738936114364</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -119,6 +109,7 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
+    <MESSAGE value="Final game" />
     <MESSAGE value="test commit" />
     <option name="LAST_COMMIT_MESSAGE" value="test commit" />
   </component>

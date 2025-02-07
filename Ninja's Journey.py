@@ -105,31 +105,31 @@ def draw_level_selection():
     selection_text = font.render("Выберите уровень:", True, (255, 255, 255))
     screen.blit(selection_text, (SCREEN_WIDTH / 2 - selection_text.get_width() / 2, 50))
     pygame.draw.rect(screen, (150, 150, 150), (50, 200, 100, 100), border_radius=10)
-    level_1_text = font.render("1", True, ("black"))
+    level_1_text = font.render("1", True, "black")
     screen.blit(level_1_text, (100 - level_1_text.get_width() // 2, 225))
     pygame.draw.rect(screen, (150, 150, 150), (250, 200, 100, 100), border_radius=10)
-    level_2_text = font.render("2", True, ("black"))
+    level_2_text = font.render("2", True, "black")
     screen.blit(level_2_text, (300 - level_2_text.get_width() // 2, 225))
     pygame.draw.rect(screen, (150, 150, 150), (450, 200, 100, 100), border_radius=10)
-    level_3_text = font.render("3", True, ("black"))
+    level_3_text = font.render("3", True, "black")
     screen.blit(level_3_text, (500 - level_3_text.get_width() // 2, 225))
     pygame.draw.rect(screen, (150, 150, 150), (650, 200, 100, 100), border_radius=10)
-    level_4_text = font.render("4", True, ("black"))
+    level_4_text = font.render("4", True, "black")
     screen.blit(level_4_text, (700 - level_4_text.get_width() // 2, 225))
     pygame.draw.rect(screen, (150, 150, 150), (50, 400, 100, 100), border_radius=10)
-    level_5_text = font.render("5", True, ("black"))
+    level_5_text = font.render("5", True, "black")
     screen.blit(level_5_text, (100 - level_5_text.get_width() // 2, 425))
     pygame.draw.rect(screen, (150, 150, 150), (250, 400, 100, 100), border_radius=10)
-    level_6_text = font.render("6", True, ("black"))
+    level_6_text = font.render("6", True, "black")
     screen.blit(level_6_text, (300 - level_6_text.get_width() // 2, 425))
     pygame.draw.rect(screen, (150, 150, 150), (450, 400, 100, 100), border_radius=10)
-    level_7_text = font.render("7", True, ("black"))
+    level_7_text = font.render("7", True, "black")
     screen.blit(level_7_text, (500 - level_7_text.get_width() // 2, 425))
     pygame.draw.rect(screen, (150, 150, 150), (650, 400, 100, 100), border_radius=10)
-    level_8_text = font.render("8", True, ("black"))
+    level_8_text = font.render("8", True, "black")
     screen.blit(level_8_text, (700 - level_8_text.get_width() // 2, 425))
     if blocked == 1:
-        blocked_text = font.render("Заблокировано", True, ("white"))
+        blocked_text = font.render("Заблокировано", True, "white")
         screen.blit(blocked_text, (SCREEN_WIDTH / 2 - blocked_text.get_width() / 2, 500))
     pygame.display.update()
 
@@ -210,7 +210,8 @@ def draw_game_over_screen():
 
 
 def Gravity(Character, inverted=0):
-    global touching_left, touching_right, jumping_left, jumping_right, jumping_rn, falling, can_jump_right, can_jump_left, jump_to_the_right, jump_to_the_left
+    global touching_left, touching_right, jumping_left, jumping_right, jumping_rn, falling, can_jump_right, \
+        can_jump_left, jump_to_the_right, jump_to_the_left
     if touching_right == 1 or touching_left == 1:
         if touching_right == 1:
             Character.surf = pygame.image.load("data/wall_right.png").convert()
@@ -328,7 +329,8 @@ class Player(pygame.sprite.Sprite):
         self.last_key = "right"
 
     def update(self, pressed_keys):
-        global touching_left, touching_right, standing, jumping_right, jumping_left, game_state, map_drawn, last_level, right, left, jumping_rn
+        global touching_left, touching_right, standing, jumping_right, jumping_left, game_state, map_drawn, last_level, \
+            right, left, jumping_rn
         if touching_right == 0 and touching_left == 0 or self.rect.bottom == SCREEN_HEIGHT:
             if jumping_right == 0 and jumping_left == 0:
                 if pressed_keys[pygame.key.key_code("a")]:
@@ -382,13 +384,15 @@ class Player(pygame.sprite.Sprite):
             self.rect.bottom = SCREEN_HEIGHT
         for platform in platforms:
             if self.rect.right == platform.rect.left and (
-                    platform.rect.bottom > self.rect.bottom > platform.rect.top or platform.rect.top < self.rect.top < platform.rect.bottom):
+                    platform.rect.bottom > self.rect.bottom > platform.rect.top or
+                    platform.rect.top < self.rect.top < platform.rect.bottom):
                 touching_right = 1
                 break
             else:
                 touching_right = 0
             if self.rect.left == platform.rect.right and (
-                    platform.rect.bottom > self.rect.bottom > platform.rect.top or platform.rect.top < self.rect.top < platform.rect.bottom):
+                    platform.rect.bottom > self.rect.bottom > platform.rect.top or
+                    platform.rect.top < self.rect.top < platform.rect.bottom):
                 touching_left = 1
                 break
             else:
@@ -504,7 +508,8 @@ while running:
                 if game_state == "help_screen" or game_state == "select_level":
                     game_state = "start_menu"
                 elif game_state == (
-                        "level 1" or "level 2" or "level 3" or "level 4" or "level 5" or "level 6" or "level 7" or "level 8"):
+                        "level 1" or "level 2" or "level 3" or "level 4" or "level 5" or "level 6" or "level 7" or
+                        "level 8"):
                     last_level = game_state
                     game_state = "pause_menu"
                 elif game_state == "pause_menu":
@@ -526,7 +531,6 @@ while running:
                 last_level = game_state
                 game_state = "game_over"
         if event.type == pygame.MOUSEBUTTONDOWN:
-            print(game_state)
             if ready_to_start == 1:
                 game_state = "select_level"
                 ready_to_start = 0
@@ -616,15 +620,12 @@ while running:
                     game_state = "level 8"
                     next = 0
             elif again == 1:
-                print(last_level)
                 player.rect = player.surf.get_rect().move(30, 500)
                 game_state = last_level
                 again = 0
             elif leave == 1:
                 game_state = "start_menu"
                 leave = 0
-            else:
-                print(pygame.mouse.get_pos())
 
     if game_state == "start_menu":
         draw_start_menu()
