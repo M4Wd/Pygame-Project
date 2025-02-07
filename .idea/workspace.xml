@@ -4,10 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="5cdef905-fddf-40b3-ad15-ffd04f684f72" name="Changes" comment="test commit">
-      <changelist_data name="M4Wd" email="mo4alinwladimir@yandex.ru" />
-      <change beforePath="$PROJECT_DIR$/Ninja's Journey.py" beforeDir="false" afterPath="$PROJECT_DIR$/Ninja's Journey.py" afterDir="false" />
-    </list>
+    <list default="true" id="5cdef905-fddf-40b3-ad15-ffd04f684f72" name="Changes" comment="Final game" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -82,7 +79,15 @@
       <option name="project" value="LOCAL" />
       <updated>1738936114364</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="Final game">
+      <option name="closed" value="true" />
+      <created>1738936419041</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1738936419041</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -109,8 +114,8 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Final game" />
     <MESSAGE value="test commit" />
-    <option name="LAST_COMMIT_MESSAGE" value="test commit" />
+    <MESSAGE value="Final game" />
+    <option name="LAST_COMMIT_MESSAGE" value="Final game" />
   </component>
 </project>
